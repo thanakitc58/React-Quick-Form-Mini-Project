@@ -94,7 +94,7 @@ export default function SurveyForm({ onSubmit }) {
             // ถ้าไม่มี error ให้แสดง border สีเทา
             nameError 
               ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
-              : 'border-gray-300 hover:border-gray-400 focus:ring-gray-300 focus:border-gray-300'
+              : 'border-gray-300 hover:border-gray-100 focus:ring-gray-300 focus:border-gray-300'
           }`}
           value={name}
           // เมื่อผู้ใช้พิมพ์ข้อความ:
@@ -125,7 +125,7 @@ export default function SurveyForm({ onSubmit }) {
             // ถ้าไม่มี error ให้แสดง border สีเทา
             emailError 
               ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
-              : 'border-gray-300 hover:border-gray-400 focus:ring-gray-300 focus:border-gray-300'
+              : 'border-gray-300 hover:border-gray-300 focus:ring-gray-300 focus:border-gray-300'
           }`}
           value={email}
           // เมื่อผู้ใช้พิมพ์อีเมล:
