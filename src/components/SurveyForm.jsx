@@ -13,6 +13,7 @@ export default function SurveyForm({ onSubmit }) {
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [movieError, setMovieError] = useState('');
+  const [emailTouched, setEmailTouched] = useState(false); // ติดตามว่าผู้ใช้เคยพิมพ์อีเมลหรือยัง
 
 
   // ตั้งค่าปุ่ม reset พอกดแล้วจะรีเซ็ตค่าในฟอร์มให้กลับค่าเดิม
@@ -24,6 +25,7 @@ export default function SurveyForm({ onSubmit }) {
     setNameError('');
     setEmailError('');
     setMovieError('');
+    setEmailTouched(false);
   };
 
   const handleSubmit = (e) => {
@@ -92,7 +94,7 @@ export default function SurveyForm({ onSubmit }) {
             // ถ้าไม่มี error ให้แสดง border สีเทา
             nameError 
               ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
-              : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
+              : 'border-gray-300 hover:border-gray-400 focus:ring-gray-300 focus:border-gray-300'
           }`}
           value={name}
           // เมื่อผู้ใช้พิมพ์ข้อความ:
@@ -123,16 +125,36 @@ export default function SurveyForm({ onSubmit }) {
             // ถ้าไม่มี error ให้แสดง border สีเทา
             emailError 
               ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
-              : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
+              : 'border-gray-300 hover:border-gray-400 focus:ring-gray-300 focus:border-gray-300'
           }`}
           value={email}
           // เมื่อผู้ใช้พิมพ์อีเมล:
           // 1. อัปเดต state email ด้วยค่าที่พิมพ์
-          // 2. ถ้ามี error อยู่ให้ล้าง error ออก (setEmailError('')) เพื่อให้กรอบสีแดงหายไป
+          // 2. ตรวจสอบรูปแบบอีเมลแบบ real-time ถ้าผู้ใช้เคยพิมพ์แล้ว
           onChange={(e) => {
-            setEmail(e.target.value);
-            if (emailError) {
+            const emailValue = e.target.value;
+            setEmail(emailValue);
+            setEmailTouched(true);
+            
+            // ตรวจสอบรูปแบบอีเมลแบบ real-time
+            if (emailValue.trim()) {
+              const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+              if (!emailRegex.test(emailValue)) {
+                setEmailError('รูปแบบอีเมลไม่ถูกต้อง');
+              } else {
+                setEmailError('');
+              }
+            } else {
               setEmailError('');
+            }
+          }}
+          onBlur={() => {
+            // เมื่อ focus ออกจาก input ให้ตรวจสอบอีกครั้ง
+            if (email.trim()) {
+              const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+              if (!emailRegex.test(email)) {
+                setEmailError('รูปแบบอีเมลไม่ถูกต้อง');
+              }
             }
           }}
         />
@@ -196,7 +218,7 @@ export default function SurveyForm({ onSubmit }) {
         <textarea
           placeholder="พิมพ์ความคิดเห็นของคุณที่นี่..."
           rows={4}
-          className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-y"
+          className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 hover:border-gray-400 focus:ring-gray-300 focus:border-gray-300 resize-y"
           value={comments}
           onChange={(e) => setComments(e.target.value)}
         />
