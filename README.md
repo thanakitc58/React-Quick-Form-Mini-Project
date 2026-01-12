@@ -2,7 +2,7 @@
 
 แอปสำรวจความชอบภาพยนตร์ที่สร้างด้วย React และ Tailwind CSS
 
-## 🚀 เทคโนโลยีที่ใช้
+## 🚀 ภาษาที่ใช้
 
 - ⚛️ **React** - UI Library
 - ⚡ **Vite** - Build Tool
@@ -35,8 +35,7 @@ npm run dev
 ```
 src/
 ├── components/     # React Components
-├── utils/          # Utility Functions
-├── constants/      # ค่าคงที่
+├── data/           # เก็บข้อมูลหนัง
 ├── App.jsx         # Main Component
 └── main.jsx        # Entry Point
 ```
